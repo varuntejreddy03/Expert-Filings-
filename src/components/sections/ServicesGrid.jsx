@@ -1,13 +1,15 @@
-import { motion } from 'framer-motion';
-import { useMemo } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useMemo, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { serviceCategories, services } from '../../data/services.js';
-import { fadeUp, staggerContainer, viewportOnce } from '../../utils/animations.js';
+import { fadeUp, staggerContainer } from '../../utils/animations.js';
 import { cn } from '../ui/Button.jsx';
 import ServiceCard from '../ui/ServiceCard.jsx';
 
 export default function ServicesGrid({ items = services, showFilters = true }) {
   const [searchParams, setSearchParams] = useSearchParams();
+  const gridRef = useRef(null);
+  const hasMounted = useRef(false);
   const categoryParam = searchParams.get('category');
   const activeCategory = showFilters && serviceCategories.includes(categoryParam) ? categoryParam : 'All';
 
@@ -17,6 +19,8 @@ export default function ServicesGrid({ items = services, showFilters = true }) {
   }, [activeCategory, items, showFilters]);
 
   const handleCategoryChange = (category) => {
+    if (category === activeCategory) return;
+
     setSearchParams(
       (current) => {
         const next = new URLSearchParams(current);
@@ -27,9 +31,21 @@ export default function ServicesGrid({ items = services, showFilters = true }) {
         }
         return next;
       },
-      { replace: false },
+      { replace: true },
     );
   };
+
+  useEffect(() => {
+    if (!hasMounted.current) {
+      hasMounted.current = true;
+      return;
+    }
+
+    const gridTop = gridRef.current?.getBoundingClientRect().top ?? 0;
+    if (gridTop < 96) {
+      gridRef.current?.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    }
+  }, [activeCategory]);
 
   return (
     <section className="bg-[#F8FAFF] section-pad">
@@ -89,17 +105,27 @@ export default function ServicesGrid({ items = services, showFilters = true }) {
         ) : null}
 
         <motion.div
+          ref={gridRef}
+          key={activeCategory}
           variants={staggerContainer}
           initial="hidden"
-          whileInView="visible"
-          viewport={viewportOnce}
+          animate="visible"
           className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {visibleServices.map((service) => (
-            <motion.div key={service.slug} variants={fadeUp} layout>
-              <ServiceCard service={service} />
-            </motion.div>
-          ))}
+          <AnimatePresence mode="popLayout">
+            {visibleServices.map((service) => (
+              <motion.div
+                key={service.slug}
+                variants={fadeUp}
+                initial="hidden"
+                animate="visible"
+                exit={{ opacity: 0, y: 16, scale: 0.98 }}
+                layout
+              >
+                <ServiceCard service={service} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </motion.div>
       </div>
     </section>
