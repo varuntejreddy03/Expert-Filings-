@@ -84,8 +84,7 @@ export default function Hero() {
             transition={{ duration: 0.45, delay: 0.32 }}
             className="mt-5 max-w-2xl text-[1.0625rem] leading-[1.75] text-slate-400"
           >
-            ITR filing, GST, registrations and business advisory for individuals and growing teams across
-            Eluru, Vijayawada and Hyderabad.
+            Delivering professional tax and compliance services across India, with offline assistance in Eluru, Vijayawada &amp; Hyderabad.
           </motion.p>
 
           <motion.div
