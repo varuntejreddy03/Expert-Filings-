@@ -1,6 +1,7 @@
 import { AnimatePresence } from 'framer-motion';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import PageLayout from './components/layout/PageLayout.jsx';
+import ScrollToTop from './components/layout/ScrollToTop.jsx';
 import { WhatsAppModalProvider } from './hooks/useWhatsAppModal.js';
 import AboutPage from './pages/AboutPage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
@@ -29,6 +30,7 @@ function AnimatedRoutes() {
 export default function App() {
   return (
     <WhatsAppModalProvider>
+      <ScrollToTop />
       <PageLayout>
         <AnimatedRoutes />
       </PageLayout>
