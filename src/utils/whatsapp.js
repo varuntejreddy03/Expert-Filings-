@@ -1,7 +1,7 @@
 export const WHATSAPP_PHONE = '919573984793';
 export const PHONE_PRIMARY = '+91 9573984793';
 export const PHONE_SECONDARY = '+91 9398047509';
-export const EMAIL = 'venkat@expertfilings.in';
+export const EMAIL = 'info@expertfilings.in';
 export const INSTAGRAM_URL = 'https://instagram.com/expert_filings';
 
 export function normalizePhone(phone) {

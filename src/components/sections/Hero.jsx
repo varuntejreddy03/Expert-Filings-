@@ -60,18 +60,18 @@ export default function Hero() {
             className="inline-flex items-center gap-2 rounded-full border border-blue-300/25 bg-blue-300/[0.07] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-blue-200"
           >
             <span className="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_18px_rgba(52,211,153,0.8)]" />
-            Tax + Business Advisory
+            Tax filing Business Advisory Start-up support
           </motion.div>
 
           <h1 className="mt-5 max-w-3xl font-display text-[clamp(2.65rem,4.25vw,4.25rem)] font-extrabold leading-[1.04] tracking-[-0.02em]">
-            {['Compliance work,', 'filed with', 'expert clarity.'].map((line, index) => (
+            {['Expert Support', 'for Every Filing'].map((line, index) => (
               <motion.span
                 key={line}
                 custom={index}
                 variants={lineVariant}
                 initial="hidden"
                 animate="visible"
-                className={index === 2 ? 'block bg-gradient-text-dark bg-clip-text text-transparent' : 'block'}
+                className={index === 1 ? 'block bg-gradient-text-dark bg-clip-text text-transparent' : 'block'}
               >
                 {line}
               </motion.span>
